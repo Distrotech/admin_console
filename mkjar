@@ -1,0 +1,31 @@
+#!/bin/bash
+
+export PATH=$PATH:/usr/X11R6/java/bin
+
+rm *.class
+javac -g:none -classpath ./ *.java 
+#javac -classpath ./ *.java 
+jar cvfm NetworkSentry.jar MANIFEST.MF *.class
+
+#Generate A X509 Cert 
+#keytool -genkey -keyalg rsa -alias netsentry -keysize 2048
+#Generate A Signing Request
+#keytool -certreq -alias netsentry
+#Import the CA Cert
+#keytool -import -alias cacert -file cacert.pem
+#Import The Signed Cert (no blank lines in file)
+#keytool -import -alias netsentry -file sign.pem
+
+#sign the applet
+if [ "$1" ];then
+  if [ "$1" == "create" ];then
+    keytool -genkey -keyalg rsa -validity 365 -alias netsentry -keysize 2048
+    keytool -certreq -alias netsentry
+    keytool -import -alias cacert -file cacert.pem
+    keytool -import -alias netsentry -file sign.pem
+  fi;
+  jarsigner NetworkSentry.jar netsentry
+  cp NetworkSentry.jar /mnt/dev/var/spool/apache/htdocs/ns
+fi;
+
+
