@@ -1114,6 +1114,9 @@ public class NetworkSentryWindow extends Container implements ChangeListener {
                 if (idata.length >= 9) {
                   network.voipdefconf.vboxfuser=idata[8].equals("true");
                 }
+                if (idata.length >= 10) {
+                  network.voipdefconf.vboxsrtp=idata[9].equals("true");
+                }
               } else if (tmp.startsWith("GOSSIP ")) {
                 tmp=tmp.substring(7,tmp.length());
                 idata=tmp.split(" ");

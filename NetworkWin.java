@@ -2163,7 +2163,7 @@ public class NetworkWin extends Container {
     JTextField fwdun,iaxun,iaxnum,gosun,ftun,vbox,vboxip,vboxpre,h323gkid;
     JPasswordField fwdpw1,fwdpw2,iaxpw1,iaxpw2,gospw1,gospw2,ftpw1,ftpw2,vbpw1,vbpw2;
     JComboBox vbproto,vbdtmf;
-    JCheckBox voipregs,voipfuser,voipvideo;
+    JCheckBox voipregs,voipfuser,voipvideo,voipsrtp;
  
     public VoipRouting() {
       String vproto[]={"IAX","SIP","H.323"};
@@ -2245,6 +2245,10 @@ public class NetworkWin extends Container {
       voipvideo=new JCheckBox("Disable Video Codecs",voipdefconf.vboxvideo);
       gridbag.setConstraints(voipvideo,layout);
       add(voipvideo);
+
+      voipsrtp=new JCheckBox("Attempt SRTP",voipdefconf.vboxsrtp);
+      gridbag.setConstraints(voipsrtp,layout);
+      add(voipsrtp);
 
 /*
       layout.anchor=GridBagConstraints.NORTH;
@@ -2352,6 +2356,7 @@ public class NetworkWin extends Container {
       voipdefconf.vboxreg=voipregs.isSelected();
       voipdefconf.vboxfuser=voipfuser.isSelected();
       voipdefconf.vboxvideo=voipvideo.isSelected();
+      voipdefconf.vboxsrtp=voipsrtp.isSelected();
       if (vbpw1.getText().equals(vbpw2.getText())) {
         voipdefconf.vboxpass=vbpw1.getText();
       } else {
@@ -5226,7 +5231,7 @@ class FaxConf {
 class voipdefreg {
   String fwduser,fwdpass,iaxuser,iaxpass,iaxnumber,gosuser,gospass,fteluser,ftelpass,vbox,vboxpass,vboxp,vboxip,vboxpre;
   String h323gkid,vboxdtmf;
-  Boolean vboxreg,vboxfuser,vboxvideo;
+  Boolean vboxreg,vboxfuser,vboxvideo,vboxsrtp;
   public voipdefreg() {
     delConfig();
   }
@@ -5249,12 +5254,14 @@ class voipdefreg {
     vboxreg=true;
     vboxfuser=true;
     vboxvideo=false;
+    vboxsrtp=true;
   }
+
   public String getconfig() {
     String Output="";
     String newline = System.getProperty("line.separator");
     if (vboxip.length() > 0) {
-      Output="IP VOIP VBOX "+vbox+" "+vboxpass+" "+vboxip+" "+vboxp+" "+vboxpre+" "+h323gkid+" "+vboxreg.toString()+" "+vboxdtmf+" "+vboxfuser+" "+vboxvideo;  
+      Output="IP VOIP VBOX "+vbox+" "+vboxpass+" "+vboxip+" "+vboxp+" "+vboxpre+" "+h323gkid+" "+vboxreg.toString()+" "+vboxdtmf+" "+vboxfuser+" "+vboxvideo+" "+vboxsrtp;
     }
 /*
     if ((fwduser.length() > 0) && (fwdpass.length() > 0)) {
