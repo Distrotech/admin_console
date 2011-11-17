@@ -465,6 +465,7 @@ public class DnsWin extends Container {
     JTextField soaretry=new JTextField(dnsconf.Retry,10);
     JTextField soaexpire=new JTextField(dnsconf.Expire,10);
     JTextField defaultttl=new JTextField(dnsconf.DefaultTTL,10);
+    JTextField dynamicttl=new JTextField(dnsconf.DynamicTTL,10);
     JTextField dyndnsserv=new JTextField(dnsconf.DynDNSIP,10);
     JTextField dyndnsdomain=new JTextField(dnsconf.DynDNSDomain,10);
 
@@ -480,6 +481,7 @@ public class DnsWin extends Container {
     JCheckBox dnspeer=new JCheckBox("Ignore PPP DNS Servers",dnsconf.Usepeer);
     JCheckBox dnsextserv=new JCheckBox("Allow External Server",dnsconf.Recursion);
     JCheckBox dnsintfirst=new JCheckBox("Use Internal Server First",dnsconf.Intfirst);
+    JCheckBox dnsaddcname=new JCheckBox("Add CNAME For Host",dnsconf.DynamicCNAME);
 
     public DnsSetup(){
       GridBagLayout gridbag = new GridBagLayout();
@@ -505,6 +507,7 @@ public class DnsWin extends Container {
       addLabel(new JLabel("SOA Retry"),soaretry,gridbag,layout);
       addLabel(new JLabel("SOA Expire"),soaexpire,gridbag,layout);
       addLabel(new JLabel("Default TTL"),defaultttl,gridbag,layout);
+      addLabel(new JLabel("Dynamic TTL"),dynamicttl,gridbag,layout);
       addLabel(new JLabel("IP Of Dynamic DNS Server"),dyndnsserv,gridbag,layout);
       addLabel(new JLabel("Dynamic Domain Name"),dyndnsdomain,gridbag,layout);
       addPwLabel(new JLabel("Shared Secret For DNS Updates"),dyndnssecret11,gridbag,layout);
@@ -547,6 +550,12 @@ public class DnsWin extends Container {
       layout.fill=GridBagConstraints.NONE;
       gridbag.setConstraints(dnsintfirst,layout);
       add(dnsintfirst);
+
+      layout.anchor=GridBagConstraints.NORTHWEST;
+      layout.gridwidth=GridBagConstraints.REMAINDER;
+      layout.fill=GridBagConstraints.NONE;
+      gridbag.setConstraints(dnsaddcname,layout);
+      add(dnsaddcname);
         
       layout.weighty=1;
       layout.gridwidth=GridBagConstraints.REMAINDER;
@@ -584,6 +593,7 @@ public class DnsWin extends Container {
       dnsconf.Retry=soaretry.getText();
       dnsconf.Expire=soaexpire.getText();
       dnsconf.DefaultTTL=defaultttl.getText();
+      dnsconf.DynamicTTL=dynamicttl.getText();
       dnsconf.DynDNSIP=dyndnsserv.getText();
       dnsconf.DynDNSDomain=dyndnsdomain.getText();
       dnsconf.Search=searchdomain.getText();
@@ -605,6 +615,7 @@ public class DnsWin extends Container {
       dnsconf.AuthX=dnsauthx.isSelected();
       dnsconf.Usepeer=dnspeer.isSelected();
       dnsconf.Recursion=dnsextserv.isSelected();
+      dnsconf.DynamicCNAME=dnsaddcname.isSelected();
     }
   }
 
@@ -751,6 +762,10 @@ public class DnsWin extends Container {
       Output=AddConfL("DNS DefaultTTL "+dnsconf.DefaultTTL);
     }
 
+    if (dnsconf.DynamicTTL.length() > 0) {
+      Output=AddConfL("DNS DynamicTTL "+dnsconf.DynamicTTL);
+    }
+
     if (dnsconf.DynDNSIP.length() > 0) {
       Output=AddConfL("DNS DynServ "+dnsconf.DynDNSIP);
     }
@@ -773,6 +788,7 @@ public class DnsWin extends Container {
     Output=AddConfL("DNS Usepeer "+dnsconf.Usepeer);
     Output=AddConfL("DNS ExtServ "+dnsconf.Recursion);
     Output=AddConfL("DNS IntFirst "+dnsconf.Intfirst);
+    Output=AddConfL("DNS DynamicCNAME "+dnsconf.DynamicCNAME);
  
 
     for (Enumeration e = topbranch.children() ; e.hasMoreElements() ;) {
@@ -825,14 +841,6 @@ public class DnsWin extends Container {
 
     dnsconf.Domain="company.co.za";
     dnsconf.Hostname="netsentry";
-    dnsconf.Serial="1";
-    dnsconf.Refresh="3600";
-    dnsconf.Retry="1800";
-    dnsconf.Expire="604800";
-    dnsconf.DefaultTTL="3600";
-    dnsconf.DynDNSSecret="secret";
-    dnsconf.DynDNSSecret2="secret";
-
 
     addIHost("192.168.0.20","manager","00:00:00:00:00");
 

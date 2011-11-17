@@ -1200,6 +1200,8 @@ public class NetworkSentryWindow extends Container implements ChangeListener {
                 domains.dnsconf.Expire=tmp.substring(7,tmp.length());
             } else if (tmp.startsWith("DefaultTTL ")) {
                 domains.dnsconf.DefaultTTL=tmp.substring(11,tmp.length());
+            } else if (tmp.startsWith("DynamicTTL ")) {
+                domains.dnsconf.DynamicTTL=tmp.substring(11,tmp.length());
             } else if (tmp.startsWith("DynServ ")) {
                 domains.dnsconf.DynDNSIP=tmp.substring(8,tmp.length());
             } else if (tmp.startsWith("DynZone ")) {
@@ -1220,6 +1222,8 @@ public class NetworkSentryWindow extends Container implements ChangeListener {
                 domains.dnsconf.Usepeer=tmp.substring(8,tmp.length()).equals("true");
             } else if (tmp.startsWith("ExtServ ")) {
                 domains.dnsconf.Recursion=tmp.substring(8,tmp.length()).equals("true");
+            } else if (tmp.startsWith("DynamicCNAME ")) {
+                domains.dnsconf.DynamicCNAME=tmp.substring(13,tmp.length()).equals("true");
             } else if (tmp.startsWith("Host ")) {
                 tmp=tmp.substring(5,tmp.length());
                 idata=tmp.split(" ");
@@ -2255,8 +2259,8 @@ class SquidConf {
 }
 
 class DnsConf {
-    String Domain,Hostname,Serial,Refresh,Retry,Expire,DefaultTTL,DynDNSIP,DynDNSDomain,DynDNSSecret,DynDNSSecret2,Search;
-    boolean Backup,Auth,Usepeer,Recursion,AuthX,Intfirst;
+    String Domain,Hostname,Serial,Refresh,Retry,Expire,DefaultTTL,DynamicTTL,DynDNSIP,DynDNSDomain,DynDNSSecret,DynDNSSecret2,Search;
+    boolean Backup,Auth,Usepeer,Recursion,AuthX,Intfirst,DynamicCNAME;
     public DnsConf(){
         delConfig();
     }
@@ -2269,6 +2273,7 @@ class DnsConf {
         Retry="1800";
         Expire="604800";
         DefaultTTL="3600";
+        DynamicTTL="180";
         DynDNSIP="";
         DynDNSDomain="";
         DynDNSSecret="secret";
@@ -2279,6 +2284,7 @@ class DnsConf {
         Usepeer=false;
         Recursion=false;
         Intfirst=false;
+	DynamicCNAME=true;
     }
 }
 
