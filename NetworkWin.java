@@ -1868,7 +1868,7 @@ public class NetworkWin extends Container {
       addLabel(new JLabel("Ip Address"),address,gridbag,layout);
 
       snmask=new JTextField("",10);
-      addLabel(new JLabel("Subnet Mask"),snmask,gridbag,layout);      
+      addLabel(new JLabel("Subnet Mask"),snmask,gridbag,layout);
 
       layout.gridwidth=GridBagConstraints.REMAINDER;
       staticr=new JCheckBox("Add Static Route For Network",false);
@@ -1879,7 +1879,7 @@ public class NetworkWin extends Container {
       layout.gridwidth=GridBagConstraints.REMAINDER;
       layout.fill=GridBagConstraints.NONE;
       layout.anchor=GridBagConstraints.NORTH;
-      
+
       if (isEdit) {
         EditRoute=(ListItem)node.getUserObject();
         greroute.setText(EditRoute.Entry);
@@ -3190,7 +3190,7 @@ public class NetworkWin extends Container {
 
       layout.fill=GridBagConstraints.HORIZONTAL;
       layout.gridwidth=GridBagConstraints.REMAINDER;
-      sortpanel=new ManageNode(node,treeModel,"Select Source Network To Manage");      
+      sortpanel=new ManageNode(node,treeModel,"Select Source Network To Manage");
       gridbag.setConstraints(sortpanel,layout);
       add(sortpanel);
 
@@ -3212,14 +3212,14 @@ public class NetworkWin extends Container {
       addLabel(new JLabel("Ip Address"),address,gridbag,layout);
 
       snmask=new JTextField("",10);
-      addLabel(new JLabel("Subnet Mask"),snmask,gridbag,layout);      
+      addLabel(new JLabel("Subnet Mask"),snmask,gridbag,layout);
 
       if (! node.isNodeAncestor(modemrules)) {
         ingress=new JTextField("",10);
-        addLabel(new JLabel("Bandwidth Limit (Incoming)"),ingress,gridbag,layout);      
+        addLabel(new JLabel("Bandwidth Limit (Incoming)"),ingress,gridbag,layout);
 
         egress=new JTextField("",10);
-        addLabel(new JLabel("Bandwidth Limit (Outgoing)"),egress,gridbag,layout);      
+        addLabel(new JLabel("Bandwidth Limit (Outgoing)"),egress,gridbag,layout);
       }
 
       layout.weighty=1;
@@ -3228,14 +3228,14 @@ public class NetworkWin extends Container {
       layout.anchor=GridBagConstraints.NORTH;
       JButton adduser=new JButton("Add Source Network");
 
-      adduser.setActionCommand("Add New User");
+      adduser.setActionCommand("Add Source Network");
       adduser.addActionListener(this);
 
       gridbag.setConstraints(adduser,layout);
       add(adduser);
 
       if (node != modemrules) {
-        intdata=(IntDef)node.getUserObject();      
+        intdata=(IntDef)node.getUserObject();
 
         layout.weightx=1;
         layout.weighty=0;
@@ -3298,8 +3298,7 @@ public class NetworkWin extends Container {
     public void actionPerformed(ActionEvent event) {
       String ipdata[];
 
-      ipdata=intip.getText().split("/");
-      if (event.getActionCommand() == "Add New User") {
+      if (event.getActionCommand() == "Add Source Network") {
         if ((username.getText().length() > 0) & (address.getText().length() > 0) & (snmask.getText().length() > 0)) {
           if (! node.isNodeAncestor(modemrules)) {
             DefaultMutableTreeNode childnode=addSourceNetwork(node,username.getText(),address.getText(),snmask.getText(),
@@ -3312,7 +3311,6 @@ public class NetworkWin extends Container {
             intwindow.scrollPathToVisible(new TreePath(childnode.getPath()));
             sortpanel.listdata.addElement(childnode);
           }
-
           username.setText("");
           address.setText("");
           snmask.setText("");
@@ -3324,6 +3322,7 @@ public class NetworkWin extends Container {
       }
 
       if (event.getActionCommand() == "Save Interface") {
+        ipdata=intip.getText().split("/");
         intdata.IPAddress=ipdata[0];
         intdata.IPSubnet=ipdata[1];
         intdata.IPGateway=intgw.getText();
