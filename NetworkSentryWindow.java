@@ -809,6 +809,8 @@ public class NetworkSentryWindow extends Container implements ChangeListener {
                 tmp=tmp.substring(8,tmp.length());
                 if (tmp.startsWith("Nexthop ")) {
                     network.tcpconf.nexthop=tmp.substring(8,tmp.length());
+                } else if (tmp.startsWith("NattedIP ")) {
+                    network.tcpconf.external=tmp.substring(9,tmp.length());
                 } else if (tmp.startsWith("VPNNet ")) {
                     network.tcpconf.vpnrange=tmp.substring(7,tmp.length());
                 } else if (tmp.startsWith("OVPNNet ")) {

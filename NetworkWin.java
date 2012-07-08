@@ -781,7 +781,7 @@ public class NetworkWin extends Container {
   class NetworkGlobal extends Container implements ActionListener {
     JComboBox lint,lent,lvpn;
 //applenetphase;
-    JTextField prwins,secwins,nexthop,lease,maxlease,ntpserver,pdns,sdns,ldaplogin,ldapserver,vpnrange,ovpnrange,l2tprange;
+    JTextField prwins,secwins,nexthop,lease,maxlease,ntpserver,pdns,sdns,ldaplogin,ldapserver,vpnrange,ovpnrange,l2tprange,external;
     JTextField ingress,egress,bridgeint;
     JPasswordField pass1,pass2;
     public NetworkGlobal() {
@@ -818,6 +818,9 @@ public class NetworkWin extends Container {
       nexthop=new JTextField(tcpconf.nexthop,10);
       addLabel(new JLabel("Gateway (Next Hop To Internet)"),nexthop,gridbag,layout);
 
+      external=new JTextField(tcpconf.external,10);
+      addLabel(new JLabel("External (Natted IP)"),external,gridbag,layout);
+
       vpnrange=new JTextField(tcpconf.vpnrange,10);
       addLabel(new JLabel("Network Used For IPSEC VPN Access"),vpnrange,gridbag,layout);
 
@@ -849,7 +852,7 @@ public class NetworkWin extends Container {
       addPwLabel(new JLabel("Confirm Password"),pass2,gridbag,layout);
 
       bridgeint=new JTextField(tcpconf.bridgeint,10);
-      addLabel(new JLabel("List Of Internal Interfaces For Bridgeing"),bridgeint,gridbag,layout);
+      addLabel(new JLabel("Internal Bridge Interfaces"),bridgeint,gridbag,layout);
 
       layout.gridwidth=1;
       JLabel intilabel=new JLabel("Select Internal Interface");
@@ -967,6 +970,7 @@ public class NetworkWin extends Container {
       tcpconf.lease=lease.getText();
       tcpconf.maxlease=maxlease.getText();
       tcpconf.nexthop=nexthop.getText();
+      tcpconf.external=external.getText();
       tcpconf.vpnrange=vpnrange.getText();
       tcpconf.ovpnrange=ovpnrange.getText();
       tcpconf.l2tprange=l2tprange.getText();
@@ -4350,6 +4354,7 @@ public class NetworkWin extends Container {
 
     if (systype.equals("full")) {
       Output=AddConfL("IP SysConf Nexthop "+tcpconf.nexthop);
+      Output=AddConfL("IP SysConf NattedIP "+tcpconf.external);
 
       if (tcpconf.vpnrange.length() > 0) {
         Output=AddConfL("IP SysConf VPNNet "+tcpconf.vpnrange);
@@ -4948,44 +4953,8 @@ public class NetworkWin extends Container {
 }
 
 class TcpConf {
-    
-    String pdns;
-    
-    String sdns;
-    
-    String pwins;
-    
-    String swins;
-    
-    String nexthop;
-    
-    String lease;
-    
-    String maxlease;
-    
-    String ntpserver;
-    
-    String skey;
-    
-    String dname;
-    
-    String hname;
-    
-/*
-    String ANetStart;    
-    String ANetFin;
-    String ANetPhase;
-*/    
-    String ldapserver;
-    
-    String ldaplogin;
-    
-    String ldappassword,ldaporigpass;
-    String bridgeint;
-    String ingress,egress;
-    String vpnrange;    
-    String ovpnrange;    
-    String l2tprange;    
+    String pdns,sdns,pwins,swins,nexthop,external,lease,maxlease,ntpserver,skey,dname,hname;
+    String ldapserver,ldaplogin,ldappassword,ldaporigpass,bridgeint,ingress,egress,vpnrange,ovpnrange,l2tprange;
     DefaultMutableTreeNode intint,extint,vpnint;
     
     public TcpConf() {
@@ -5001,6 +4970,7 @@ class TcpConf {
         pwins="";
         swins="";
         nexthop="";
+        external="";
         lease="43200";
         maxlease="86400";
         ntpserver="";
