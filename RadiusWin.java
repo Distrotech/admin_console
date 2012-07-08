@@ -20,10 +20,8 @@ public class RadiusWin extends Container {
   String radauport="1645";
   String radacport="1646";
   String wirerange="";
-  String hspotrange="";
   Boolean wrangenat=true;
   String pppoeint="";
-  String hspotint="";
   String ingress="";
   String egress="";
 
@@ -85,7 +83,7 @@ public class RadiusWin extends Container {
   }
 
   class RadSecret extends Container implements ActionListener {
-    JTextField server,authport,accport,wrange,hrange,wint,hint,ingresstf,egresstf;
+    JTextField server,authport,accport,wrange,wint,ingresstf,egresstf;
     JCheckBox wirerangenat;
     JPasswordField secret1,secret2;
 
@@ -126,8 +124,10 @@ public class RadiusWin extends Container {
       wrange=new JTextField(wirerange,10);
       addLabel(new JLabel("Subnet Of Addressess For PPPoE"),wrange,gridbag,layout);
 
+/*
       hrange=new JTextField(hspotrange,10);
       addLabel(new JLabel("Subnet Of Addressess For Hotspot"),hrange,gridbag,layout);
+*/
 
       layout.gridwidth=GridBagConstraints.REMAINDER;
       layout.fill=GridBagConstraints.NONE;
@@ -138,8 +138,10 @@ public class RadiusWin extends Container {
       wint=new JTextField(pppoeint,10);
       addLabel(new JLabel("Interface To Listen For PPPoE"),wint,gridbag,layout);
 
+/*
       hint=new JTextField(hspotint,10);
       addLabel(new JLabel("Interface To Listen For Hotspot"),hint,gridbag,layout);
+*/
 
       ingresstf=new JTextField(ingress,10);
       addLabel(new JLabel("Limit For Incomeing PPPoE Traffic"),ingresstf,gridbag,layout);
@@ -186,16 +188,20 @@ public class RadiusWin extends Container {
       if (wrange.getText().length() > 0){ 
         wirerange=wrange.getText();
       }
+/*
       if (hrange.getText().length() > 0){ 
         hspotrange=hrange.getText();
       }
+*/
       wrangenat=wirerangenat.isSelected();
       if (wint.getText().length() > 0){ 
         pppoeint=wint.getText();
       }
+/*
       if (hint.getText().length() > 0){ 
         hspotint=hint.getText();
       }
+*/
       if (ingresstf.getText().length() > 0){ 
         ingress=ingresstf.getText();
       }
@@ -759,7 +765,7 @@ public class RadiusWin extends Container {
     Output=AddConfL("Radius Secret "+ssecret);
     Output=AddConfL("Radius PPPoE "+wirerange+" "+wrangenat);
     Output=AddConfL("Radius PPPoEIF "+pppoeint);
-    Output=AddConfL("Radius Hotspot "+hspotrange+" "+hspotint);
+//    Output=AddConfL("Radius Hotspot "+hspotrange+" "+hspotint);
     Output=AddConfL("Radius Ingress "+ingress);
     Output=AddConfL("Radius Egress "+egress);
 

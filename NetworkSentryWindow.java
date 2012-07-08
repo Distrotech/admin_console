@@ -1003,10 +1003,14 @@ public class NetworkSentryWindow extends Container implements ChangeListener {
                 tmp=tmp.substring(5,tmp.length());
                 idata=tmp.split(" ");
                 if (idata.length == 8) {
-                  network.addWiFi(idata[0],idata[1].replaceAll("_"," "),idata[2].replaceAll("_"," "),idata[3],
-                                  idata[4],idata[5],idata[6],idata[7]);
-                } else if (idata.length == 4) {
-                  network.addLiteWiFi(idata[1].replaceAll("_"," "),idata[2],idata[3]);
+                  network.addWiFi(network.getInterface(idata[0]),Integer.parseInt(idata[1]),idata[2],
+                                  idata[3],idata[4],idata[5],idata[6],idata[7]);
+                } else if (idata.length == 7) {
+                  network.addWiFi(network.getInterface(idata[0]),Integer.parseInt(idata[1]),idata[2],
+                                  idata[3],idata[4],idata[5],idata[6],"");
+                } else if (idata.length == 6) {
+                  network.addWiFi(network.getInterface(idata[0]),Integer.parseInt(idata[1]),idata[2],
+                                  idata[3],idata[4],idata[5],"","");
                 }
             } else if (tmp.startsWith("ADSL ")) {
                 tmp=tmp.substring(5,tmp.length());
@@ -1304,6 +1308,7 @@ public class NetworkSentryWindow extends Container implements ChangeListener {
                 if (idata.length == 4) {
                   radius.wrangenat=idata[1].equals("true");
                 }
+/*
             } else if (tmp.startsWith("Hotspot ")){
                 tmp=tmp.substring(8,tmp.length());
                 idata=tmp.split(" ");
@@ -1311,6 +1316,7 @@ public class NetworkSentryWindow extends Container implements ChangeListener {
                   radius.hspotrange=idata[0];
                   radius.hspotint=idata[1];
                 }
+*/
             } else if (tmp.startsWith("PPPoEIF ")){
                 tmp=tmp.substring(8,tmp.length());
                 radius.pppoeint=tmp;
@@ -2505,20 +2511,37 @@ class GenralRoute {
 
 
 class WiFiConfig {
-    String key,apmac,channel,essid,name,power,rate,device;
-    public WiFiConfig(String idevice, String iessid,String iname,String ikey,
-                      String iapmac,String ichannel,String ipower,String irate){
+    String key,channel,power,auth,opmode,regdom;
+    DefaultMutableTreeNode device;
+    Integer mode;
+    String[] modelist={"a","b [ch 1/6/11/14]","g [ch 1/5/9/13]","n 20Mhz[ch 1/5/9/13]","n 40Mhz[ch 3/11]"};
+
+    public WiFiConfig() {
+    }
+
+    public WiFiConfig(DefaultMutableTreeNode idevice,Integer bmode,String atype,
+                      String iopmode,String iregdom,String ichannel,String ipower, String ikey){
         device=idevice;
-        essid=iessid;
-        name=iname;
         key=ikey;
-        apmac=iapmac;        
         channel=ichannel;
         power=ipower;
-	rate=irate;
+	mode=bmode;
+        auth=atype;
+        opmode=iopmode;
+        regdom=iregdom;
     }
+
+    public String confout() {
+	IntDef iface;
+	iface=(IntDef)device.getUserObject();
+        String Output="IP WiFi "+iface.IntName+" "+mode+" "+auth+" "+opmode+" "+regdom+" "+channel+" "+power+" "+key;
+	return Output;
+    }
+
     public String toString(){
-        String Output=device+" ("+name+"/"+essid+" "+rate+"Mb/s ch "+channel+"/"+power+"mW)";
+	IntDef iface;
+	iface=(IntDef)device.getUserObject();
+        String Output=iface.IntName+" ("+iface.Description+" ["+opmode+"] 802.11/"+modelist[mode].substring(0,1)+" ch "+channel+"/"+power+"mW Auth:"+auth+")";
         return Output;
     }
 }
