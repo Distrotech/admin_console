@@ -18,8 +18,8 @@ public class NetworkWin extends Container {
   ModemConf modemconf=new ModemConf();
   voipdefreg voipdefconf=new voipdefreg();
   FaxConf faxconf=new FaxConf();
-  DefaultMutableTreeNode topbranch,intNode,iwconfig,lwireless,wanNode,genroute,grenode,espnode,espaccnode,modemnode,rulenode,modemrules,lnetwork,sslcert,faxnode;
-//protoconf
+  DefaultMutableTreeNode topbranch,intNode,iwconfig,wanNode,genroute,grenode,espnode,espaccnode,modemnode,rulenode,modemrules,lnetwork,sslcert,faxnode;
+//protoconf,lwireless
   DefaultMutableTreeNode adslacc,adsllink,lbnode,voipnode,voipsip,voipiax;
   String Output="";
   String systype="lite";
@@ -38,7 +38,7 @@ public class NetworkWin extends Container {
 
     intNode=new DefaultMutableTreeNode("Network Interface");
     iwconfig=new DefaultMutableTreeNode("Wireless Config");
-    lwireless=new DefaultMutableTreeNode(new WiFiConfig("lite","","","","","","",""));
+//    lwireless=new DefaultMutableTreeNode(new WiFiConfig("lite","","","","","","",""));
     lnetwork=new DefaultMutableTreeNode("Network Interface");
     wanNode=new DefaultMutableTreeNode("Wan Routing/Nodes");
     genroute=new DefaultMutableTreeNode("Other Routes");
@@ -111,9 +111,11 @@ public class NetworkWin extends Container {
         lint=addInterface("Internal","","","","","eth0","","","","");
         treeModel.insertNodeInto(lint,lnetwork,lnetwork.getChildCount());    
       }
+/*
       if (lwireless == null) {
         addLiteWiFi("","","");
       }
+*/
       topbranch.add(lnetwork);
       topbranch.add(iwconfig);
     }
@@ -144,9 +146,9 @@ public class NetworkWin extends Container {
     int Depth=intwindow.getSelectionPath().getPathCount();
     Object nodeInfo = node.getUserObject();
 
-    if ((Depth == 1) & (systype.equals("full"))) {
+    if ((Depth == 1) && (systype.equals("full"))) {
       mainwindow.setBottomComponent(new NetworkGlobal());
-    } else if ((Depth == 1) & (! systype.equals("full"))) {
+    } else if ((Depth == 1) && (! systype.equals("full"))) {
       mainwindow.setBottomComponent(new getSerial());
     } else if (nodeInfo == "Network Interface") {
       mainwindow.setBottomComponent(new IntConfig());
@@ -161,8 +163,8 @@ public class NetworkWin extends Container {
     } else if (node == iwconfig) {
       if (systype.equals("full")) {
         mainwindow.setBottomComponent(new WirelessConfig(null,false));
-      } else {
-        mainwindow.setBottomComponent(new WirelessConfig(lwireless,true));
+//      } else {
+//        mainwindow.setBottomComponent(new WirelessConfig(lwireless,true));
       }
     } else if ((node.isNodeAncestor(iwconfig)) && (systype.equals("full"))) {
       mainwindow.setBottomComponent(new WirelessConfig(node,true));
@@ -176,11 +178,11 @@ public class NetworkWin extends Container {
       mainwindow.setBottomComponent(new ModemConfig());
     } else if (node == faxnode) {
       mainwindow.setBottomComponent(new FaxConfig());
-    } else if ((node == modemrules) & (systype.equals("full"))) {
+    } else if ((node == modemrules) && (systype.equals("full"))) {
       mainwindow.setBottomComponent(new AddFwUser());
-    } else if ((node.getParent() == modemrules) & (systype.equals("full"))) {
+    } else if ((node.getParent() == modemrules) && (systype.equals("full"))) {
       mainwindow.setBottomComponent(new RuleConfig(node,false));
-    } else if ((node.isNodeAncestor(modemrules)) & (systype.equals("full"))) {
+    } else if ((node.isNodeAncestor(modemrules)) && (systype.equals("full"))) {
       mainwindow.setBottomComponent(new RuleConfig(node,true));
     } else if (node.getParent().toString() == "GRE VPN Tunnels") {
       mainwindow.setBottomComponent(new AddGreRoute(false));
@@ -188,15 +190,15 @@ public class NetworkWin extends Container {
       mainwindow.setBottomComponent(new EspConfig(true,node));
     } else if (node.getParent().toString() == "ESP Remote Access") {
       mainwindow.setBottomComponent(new EspAccConfig(true,node));
-    } else if ((Depth == 3) & (node.isNodeAncestor(intNode)) & (systype.equals("full"))) {
+    } else if ((Depth == 3) && (node.isNodeAncestor(intNode)) && (systype.equals("full"))) {
       mainwindow.setBottomComponent(new AddFwUser());
-    } else if ((Depth == 4) & (node.isNodeAncestor(intNode)) & (systype.equals("full"))) {
+    } else if ((Depth == 4) && (node.isNodeAncestor(intNode)) && (systype.equals("full"))) {
       mainwindow.setBottomComponent(new RuleConfig(node,false));
-    } else if ((Depth == 5) & (node.isNodeAncestor(intNode)) & (systype.equals("full"))) {
+    } else if ((Depth == 5) && (node.isNodeAncestor(intNode)) && (systype.equals("full"))) {
       mainwindow.setBottomComponent(new RuleConfig(node,true));
-    } else if ((Depth == 4) & (node.isNodeAncestor(grenode)) & (systype.equals("full"))) {
+    } else if ((Depth == 4) && (node.isNodeAncestor(grenode)) && (systype.equals("full"))) {
       mainwindow.setBottomComponent(new RuleConfig(node,false));
-    } else if ((Depth == 5) & (node.isNodeAncestor(grenode)) & (systype.equals("full"))) {
+    } else if ((Depth == 5) && (node.isNodeAncestor(grenode)) && (systype.equals("full"))) {
       mainwindow.setBottomComponent(new RuleConfig(node,true));
 /*
     } else if (node == protoconf) {
@@ -402,7 +404,7 @@ public class NetworkWin extends Container {
       add(textfield);
     }
     public void actionPerformed(ActionEvent event) {
-      if ((destip.getText().length() > 0 ) & (tosdescrip.getText().length() >0 )) {
+      if ((destip.getText().length() > 0 ) && (tosdescrip.getText().length() >0 )) {
         if (destport.getText().length() == 0) {
           destport.setText("0:65534");
         }
@@ -551,7 +553,7 @@ public class NetworkWin extends Container {
     }
 
     public void actionPerformed(ActionEvent event) {
-      if ((username.getText().length() > 0) & (password1.getText().length() > 0) &
+      if ((username.getText().length() > 0) && (password1.getText().length() > 0) &&
           (password1.getText().equals(password2.getText()))) {
         if (! isEdit) {
           DefaultMutableTreeNode childnode=null;
@@ -709,10 +711,10 @@ public class NetworkWin extends Container {
       add(textfield);
     }
     public void actionPerformed(ActionEvent event) {
-      if ((auser.getText().length() > 0 ) & (pass1.getText().length() > 0) &
-          (pass1.getText().equals(pass2.getText())) & 
-          (intdescrip.getText().length() >0 ) & (ingress.getText().length() >0) &
-          (egress.getText().length() > 0) &  (port.getText().length() > 0)) {
+      if ((auser.getText().length() > 0 ) && (pass1.getText().length() > 0) &&
+          (pass1.getText().equals(pass2.getText())) && 
+          (intdescrip.getText().length() >0 ) && (ingress.getText().length() >0) &&
+          (egress.getText().length() > 0) &&  (port.getText().length() > 0)) {
 //          (service.getText().length() > 0)){
         if (! isEdit) {
           DefaultMutableTreeNode childnode=addAdslLink(intdescrip.getText(),auser.getText(),pass1.getText(),ingress.getText(),
@@ -1135,7 +1137,7 @@ public class NetworkWin extends Container {
         addint.setEnabled(servalid);
       }
 
-      if ((! systype.equals("full")) & (lnetwork.getChildCount() > 0)) {
+      if ((! systype.equals("full")) && (lnetwork.getChildCount() > 0)) {
         layout.gridwidth=GridBagConstraints.REMAINDER;
         editint.setActionCommand("Edit Interface");
         editint.addActionListener(this);
@@ -1159,8 +1161,8 @@ public class NetworkWin extends Container {
 
       ipdata=intip.getText().split("/");
       if (event.getActionCommand() == "Add Interface") {
-        if ((ipdata[0].length() > 0 ) & (ipdata[1].length() > 0) & 
-            (inteth.getText().length() >0 ) & (intdescrip.getText().compareTo("Dialup") != 0)) {
+        if ((ipdata[0].length() > 0 ) && (ipdata[1].length() > 0) && 
+            (inteth.getText().length() >0 ) && (intdescrip.getText().compareTo("Dialup") != 0)) {
           if (systype.equals("full")) {
             childnode=addInterface(intdescrip.getText(),ipdata[0],ipdata[1],intstart.getText(),
                                    intend.getText(),inteth.getText(),ingress.getText(),egress.getText(),
@@ -1205,7 +1207,7 @@ public class NetworkWin extends Container {
         intmac.setText("");
       }
 
-      if ((! systype.equals("full")) & (lnetwork.getChildCount() > 0)) {
+      if ((! systype.equals("full")) && (lnetwork.getChildCount() > 0)) {
         addint.setEnabled(false);
       }
     }
@@ -1347,8 +1349,8 @@ public class NetworkWin extends Container {
       add(textfield);
     }
     public void actionPerformed(ActionEvent event) {
-      if ((intip.getText().length() > 0 ) & (intnm.getText().length() > 0) & 
-          (intdescrip.getText().length() >0 ) & (intgw.getText().length() >0)) {
+      if ((intip.getText().length() > 0 ) && (intnm.getText().length() > 0) && 
+          (intdescrip.getText().length() >0 ) && (intgw.getText().length() >0)) {
         if (! isEdit) {
           DefaultMutableTreeNode childnode=addGenRoute(intdescrip.getText(),intip.getText(),intnm.getText(),intgw.getText());
           intwindow.scrollPathToVisible(new TreePath(childnode.getPath()));
@@ -1371,9 +1373,10 @@ public class NetworkWin extends Container {
 
   class WirelessConfig extends Container implements ActionListener {
     ManageNode sortpanel;
-    JTextField key,apmac,channel,essid,name,power,rate,device; 
+    JTextField key,channel,power,regdom;
     JLabel textlabel;
     JButton addint;
+    JComboBox device,mode,atype,apmode;
     boolean isEdit;
     DefaultMutableTreeNode node;
     WiFiConfig EditWiFi;
@@ -1395,7 +1398,7 @@ public class NetworkWin extends Container {
       if (! isEdit) {
         layout.fill=GridBagConstraints.HORIZONTAL;
         layout.gridwidth=GridBagConstraints.REMAINDER;
-        sortpanel=new ManageNode(genroute,treeModel,"Select Wireless NIC To Manage");
+        sortpanel=new ManageNode(iwconfig,treeModel,"Select Wireless NIC To Manage");
         gridbag.setConstraints(sortpanel,layout);
         add(sortpanel);
 
@@ -1405,6 +1408,7 @@ public class NetworkWin extends Container {
         textlabel=new JLabel("Enter Properties Of New Wireless NIC");
         gridbag.setConstraints(textlabel,layout);
         add(textlabel);
+        EditWiFi = new WiFiConfig();
       } else {
         EditWiFi=(WiFiConfig)node.getUserObject();
         layout.weighty=0;
@@ -1422,51 +1426,73 @@ public class NetworkWin extends Container {
       layout.fill=GridBagConstraints.HORIZONTAL;
       layout.anchor=GridBagConstraints.NORTHWEST;
 
-      device=new JTextField("",10);
       if ((! isEdit) && (systype.equals("full"))) {
-        addLabel(new JLabel("Interface Name"),device,gridbag,layout);
+        layout.gridwidth=1;
+        JLabel intilabel=new JLabel("Select Interface");
+        gridbag.setConstraints(intilabel,layout);
+        add(intilabel);
+        layout.gridwidth=GridBagConstraints.REMAINDER;
+        device=new JComboBox(getIntList(false));
+        device.setSelectedItem(tcpconf.intint);
+        gridbag.setConstraints(device,layout);
+        add(device);
       }
 
-      essid=new JTextField("",10);
-      addLabel(new JLabel("Network"),essid,gridbag,layout);
+      layout.gridwidth=1;
+      JLabel apmodelabel=new JLabel("WiFi Configuration");
+      gridbag.setConstraints(apmodelabel,layout);
+      add(apmodelabel);
+      layout.gridwidth=GridBagConstraints.REMAINDER;
+      String apmodelist[]={"AP","Client","Hotspot"};
+      apmode=new JComboBox(apmodelist);
+      gridbag.setConstraints(apmode,layout);
+      add(apmode);
 
-      name=new JTextField("",10);
-      if (systype.equals("full")) {
-        addLabel(new JLabel("Nickname"),name,gridbag,layout);
-      }
+      layout.gridwidth=1;
+      JLabel modelabel=new JLabel("802.11 Mode (AP/Hotspot)");
+      gridbag.setConstraints(modelabel,layout);
+      add(modelabel);
+      layout.gridwidth=GridBagConstraints.REMAINDER;
+      mode=new JComboBox(EditWiFi.modelist);
+      gridbag.setConstraints(mode,layout);
+      add(mode);
 
-      key=new JTextField("",10);
-      addLabel(new JLabel("WEP Key"),key,gridbag,layout);
-
-      apmac=new JTextField("",10);
-      if (systype.equals("full")) {
-        addLabel(new JLabel("AP (MAC/any) [Managed Mode]"),apmac,gridbag,layout);
-      }
+      layout.gridwidth=1;
+      JLabel atlabel=new JLabel("Preferred Auth Type");
+      gridbag.setConstraints(atlabel,layout);
+      add(atlabel);
+      layout.gridwidth=GridBagConstraints.REMAINDER;
+      String atlist[]={"None","WPA","EAP"};
+      atype=new JComboBox(atlist);
+      gridbag.setConstraints(atype,layout);
+      add(atype);
 
       channel=new JTextField("",10);
       addLabel(new JLabel("Channel"),channel,gridbag,layout);
 
-      power=new JTextField("",10);
-      if (systype.equals("full")) {
-        addLabel(new JLabel("TX Power (mW)"),power,gridbag,layout);
-      }
-      rate=new JTextField("",10);
+      key=new JTextField("",10);
+      addLabel(new JLabel("Key (WEP 40/104/128bit ASCII/HEX)"),key,gridbag,layout);
 
-      if (systype.equals("full")) {
-        addLabel(new JLabel("Transfer Rate (<Mbs)"),rate,gridbag,layout);
-      }
+      power=new JTextField("",10);
+      addLabel(new JLabel("TX Power (mW)"),power,gridbag,layout);
+
+      regdom=new JTextField("",10);
+      addLabel(new JLabel("Regulatory Domain (ISO Code)"),regdom,gridbag,layout);
 
       if (isEdit) {
-        essid.setText(EditWiFi.essid);
         key.setText(EditWiFi.key);
         channel.setText(EditWiFi.channel);
-        device.setText(EditWiFi.device);
-        name.setText(EditWiFi.name);
-        apmac.setText(EditWiFi.apmac);
         power.setText(EditWiFi.power);
-        rate.setText(EditWiFi.rate);
+        atype.setSelectedItem(EditWiFi.auth);
+        apmode.setSelectedItem(EditWiFi.opmode);
+        mode.setSelectedIndex(EditWiFi.mode);
+        regdom.setText(EditWiFi.regdom);
         addint=new JButton("Save Config");
       } else {
+        mode.setSelectedIndex(2);
+        atype.setSelectedItem("WPA");
+        apmode.setSelectedItem("AP");
+        regdom.setText("ZA");
         addint=new JButton("Add Config");
       }
 
@@ -1489,46 +1515,32 @@ public class NetworkWin extends Container {
       add(textfield);
     }
     public void actionPerformed(ActionEvent event) {
-      if ((device.getText().length() > 0 ) & (channel.getText().length() > 0) & 
-          (essid.getText().length() >0 )) {
-        if (! isEdit) {
-          if (! systype.equals("full")) {
-            DefaultMutableTreeNode childnode=addWiFi(device.getText(),essid.getText(),name.getText(),
-                                                     key.getText(),apmac.getText(),channel.getText(),
-                                                     power.getText(),rate.getText());
-            intwindow.scrollPathToVisible(new TreePath(childnode.getPath()));
-            sortpanel.listdata.addElement(childnode);
-          } else {
-            addLiteWiFi(essid.getText(),key.getText(),channel.getText());
-          }
+      if (!isEdit && (device != null) && (channel.getText().length() > 0)) {
+        DefaultMutableTreeNode childnode=addWiFi((DefaultMutableTreeNode)device.getSelectedItem(),mode.getSelectedIndex(),
+                                        atype.getSelectedItem().toString(),apmode.getSelectedItem().toString(),regdom.getText(),
+                                        channel.getText(),power.getText(),key.getText());
+        intwindow.scrollPathToVisible(new TreePath(childnode.getPath()));
+        sortpanel.listdata.addElement(childnode);
 
-          essid.setText("");
-          key.setText("");
-          channel.setText("");
-          if (systype.equals("full")) {
-            device.setText("");
-            name.setText("");
-            power.setText("");
-            rate.setText("");
-            apmac.setText("");
-          }
-        } else {
-          EditWiFi.essid=essid.getText();
-          EditWiFi.key=key.getText();
-          EditWiFi.channel=channel.getText();
-          EditWiFi.name=name.getText();
-          EditWiFi.apmac=apmac.getText();
-          EditWiFi.rate=rate.getText();
-          EditWiFi.power=power.getText();
-          if (systype.equals("full")) {
-            treeModel.reload(node);
-            intwindow.scrollPathToVisible(new TreePath(node));
-          } else {
-            treeModel.reload(iwconfig);
-            intwindow.scrollPathToVisible(new TreePath(iwconfig));
-          }
-        }
-      } else if (isEdit) {
+        key.setText("");
+        channel.setText("");
+        power.setText("");
+        regdom.setText("ZA");
+        device.setSelectedItem(tcpconf.intint);
+        mode.setSelectedIndex(2);
+        atype.setSelectedItem("WPA");
+        apmode.setSelectedItem("AP");
+      } else if (isEdit && (channel.getText().length() > 0)) {
+        EditWiFi.key=key.getText();
+        EditWiFi.channel=channel.getText();
+        EditWiFi.mode=mode.getSelectedIndex();
+        EditWiFi.auth=atype.getSelectedItem().toString();
+        EditWiFi.opmode=apmode.getSelectedItem().toString();
+        EditWiFi.power=power.getText();
+        EditWiFi.regdom=regdom.getText();
+        treeModel.reload(node);
+        intwindow.scrollPathToVisible(new TreePath(node.getPath()));
+      } else {
         treeModel.reload(node);
         intwindow.scrollPathToVisible(new TreePath(node));
       }
@@ -1536,17 +1548,11 @@ public class NetworkWin extends Container {
   }
 
 
-  public DefaultMutableTreeNode addWiFi(String device,String essid,String name,String key,
-                                            String apmac,String channel,String power,String rate) {
-    DefaultMutableTreeNode childnode=new DefaultMutableTreeNode(new WiFiConfig(device,essid,name,key,apmac,
-                                                                               channel,power,rate));
+  public DefaultMutableTreeNode addWiFi(DefaultMutableTreeNode device,int mode,String auth,
+                                            String apmode,String regdom,String channel,String power,String key) {
+    DefaultMutableTreeNode childnode=new DefaultMutableTreeNode(new WiFiConfig(device,mode,auth,apmode,regdom,channel,power,key));
     treeModel.insertNodeInto(childnode,iwconfig,iwconfig.getChildCount());
     return childnode;
-  }
-
-  public DefaultMutableTreeNode addLiteWiFi(String essid,String key,String channel) {
-    lwireless=new DefaultMutableTreeNode(new WiFiConfig("lite",essid,"",key,"",channel,"",""));
-    return lwireless;
   }
 
   public DefaultMutableTreeNode addGenRoute(String intdescrip,String intip,String intnm,String intgw) {
@@ -1654,8 +1660,8 @@ public class NetworkWin extends Container {
       add(textfield);
     }
     public void actionPerformed(ActionEvent event) {
-      if ((intip.getText().length() > 0 ) & (intnm.getText().length() > 0) & 
-          (intdescrip.getText().length() >0 ) & (intlgw.getText().length() >0) & 
+      if ((intip.getText().length() > 0 ) && (intnm.getText().length() > 0) && 
+          (intdescrip.getText().length() >0 ) && (intlgw.getText().length() >0) && 
           (intrgw.getText().length() >0 )) {
         if (! isEdit) {
           DefaultMutableTreeNode childnode=addIpRoute(intdescrip.getText(),intip.getText(),intnm.getText(),
@@ -1768,8 +1774,8 @@ public class NetworkWin extends Container {
       add(textfield);
     }
     public void actionPerformed(ActionEvent event) {
-      if ((intip.getText().length() > 0 ) & (remip.getText().length() > 0) &&
-          (greintbind.getText().length() > 0) & (linkmtu.getText().length() > 0 )) {
+      if ((intip.getText().length() > 0 ) && (remip.getText().length() > 0) &&
+          (greintbind.getText().length() > 0) && (linkmtu.getText().length() > 0 )) {
         DefaultMutableTreeNode childnode=addGreTunnel(intip.getText(),
                                 remip.getText(),greintbind.getText(),
                                 linkmtu.getText(),ipsec.getSelectedIndex(),crlurl.getText());
@@ -1959,7 +1965,7 @@ public class NetworkWin extends Container {
 
     public void actionPerformed(ActionEvent event) {
       if (event.getActionCommand() == "Add Gre Network") {
-        if ((username.getText().length() > 0) & (address.getText().length() > 0) & (snmask.getText().length() > 0)) {
+        if ((username.getText().length() > 0) && (address.getText().length() > 0) && (snmask.getText().length() > 0)) {
           DefaultMutableTreeNode childnode=addSourceNetwork(node,username.getText(),address.getText(),snmask.getText(),
                                                             "","",staticr.isSelected());
           intwindow.scrollPathToVisible(new TreePath(childnode.getPath()));
@@ -1970,7 +1976,7 @@ public class NetworkWin extends Container {
           staticr.setSelected(false);
         }
       } else {
-        if ((intip.getText().length() > 0 ) & (remip.getText().length() > 0)) {
+        if ((intip.getText().length() > 0 ) && (remip.getText().length() > 0)) {
           EditGre.LocalIP=intip.getText();
           EditGre.RemoteIP=remip.getText();
           EditGre.LocalINT=greintbind.getText();
@@ -2102,8 +2108,8 @@ public class NetworkWin extends Container {
       add(textfield);
     }
     public void actionPerformed(ActionEvent event) {
-      if ((address.getText().length() > 0) & (pass1.getText().equals(pass2.getText())) &
-          (user.getText().length() > 0) & (pass1.getText().length() > 0) &
+      if ((address.getText().length() > 0) && (pass1.getText().equals(pass2.getText())) &&
+          (user.getText().length() > 0) && (pass1.getText().length() > 0) &&
           (authcontext.getText().length() >0) ) {
         if (! isEdit) {
           DefaultMutableTreeNode childnode; 
@@ -2599,8 +2605,8 @@ public class NetworkWin extends Container {
       add(textfield);
     }
     public void actionPerformed(ActionEvent event) {
-      if ((address.getText().length() > 0) & (remgw.getText().length() > 0) &
-          (localsn.getText().length() > 0) & (remotesn.getText().length() > 0)) {
+      if ((address.getText().length() > 0) && (remgw.getText().length() > 0) &&
+          (localsn.getText().length() > 0) && (remotesn.getText().length() > 0)) {
         if (! isEdit) {
           DefaultMutableTreeNode childnode; 
 /*
@@ -2762,7 +2768,7 @@ public class NetworkWin extends Container {
       IntDef intset;
       DefaultMutableTreeNode intnode;
 
-      if ((localsn.getText().length() > 0) & (remotesn.getText().length() > 0)) {
+      if ((localsn.getText().length() > 0) && (remotesn.getText().length() > 0)) {
         if (! isEdit) {
           DefaultMutableTreeNode childnode; 
 
@@ -3299,7 +3305,7 @@ public class NetworkWin extends Container {
       String ipdata[];
 
       if (event.getActionCommand() == "Add Source Network") {
-        if ((username.getText().length() > 0) & (address.getText().length() > 0) & (snmask.getText().length() > 0)) {
+        if ((username.getText().length() > 0) && (address.getText().length() > 0) && (snmask.getText().length() > 0)) {
           if (! node.isNodeAncestor(modemrules)) {
             DefaultMutableTreeNode childnode=addSourceNetwork(node,username.getText(),address.getText(),snmask.getText(),
                                                               ingress.getText(),egress.getText());
@@ -3383,7 +3389,7 @@ public class NetworkWin extends Container {
       for (Enumeration e = node.children() ; e.hasMoreElements() ;) {
         intdata=(DefaultMutableTreeNode)e.nextElement();
         intset=(FwUser)intdata.getUserObject();
-        if ((intset.IPSubnet.equals(snmask)) & (intset.IPAddress.equals(network))) {
+        if ((intset.IPSubnet.equals(snmask)) && (intset.IPAddress.equals(network))) {
           intset.Route=true;
         }
       }
@@ -3856,7 +3862,7 @@ public class NetworkWin extends Container {
         snmask=new JTextField(sndata.IPSubnet,10);
         addLabel(new JLabel("Subnet Mask"),snmask,gridbag,layout);      
 
-        if ((! node.isNodeAncestor(modemrules)) & (! node.isNodeAncestor(grenode))) {
+        if ((! node.isNodeAncestor(modemrules)) && (! node.isNodeAncestor(grenode))) {
           ingressbw=new JTextField(sndata.Ingress,10);
           addLabel(new JLabel("Bandwidth Limit (Incoming)"),ingressbw,gridbag,layout);      
 
@@ -3904,10 +3910,10 @@ public class NetworkWin extends Container {
           destip.setText("-");
         }
 
-        if ((destip.getText().length() > 0) & (discrip.getText().length() > 0)) {
+        if ((destip.getText().length() > 0) && (discrip.getText().length() > 0)) {
           iface=(DefaultMutableTreeNode)destination.getSelectedItem();
   
-          if ((! iface.toString().equals("Modem")) & (! iface.toString().equals("GRE Tunnel")) & (! iface.toString().equals("Open VPN"))) {
+          if ((! iface.toString().equals("Modem")) && (! iface.toString().equals("GRE Tunnel")) && (! iface.toString().equals("Open VPN"))) {
             destint=(IntDef)iface.getUserObject();
             intname=destint.IntName;
           } else if (iface.toString().equals("GRE Tunnel")) {
@@ -3973,7 +3979,7 @@ public class NetworkWin extends Container {
       } else if (event.getActionCommand() == "Edit User") {
         sndata.IPAddress=address.getText();
         sndata.IPSubnet=snmask.getText();
-        if ((! node.isNodeAncestor(modemrules)) & (! node.isNodeAncestor(grenode))) {
+        if ((! node.isNodeAncestor(modemrules)) && (! node.isNodeAncestor(grenode))) {
           sndata.Ingress=ingressbw.getText();        
           sndata.Egress=egress.getText();        
         } else if (node.isNodeAncestor(grenode)) {
@@ -4253,7 +4259,7 @@ public class NetworkWin extends Container {
         if (intset.Description.length() == 0) {
           intset.Description=intset.IntName;
         }
-        if ((intset.IPStart.length() > 0) & (intset.IPEnd.length() >0 )) {
+        if ((intset.IPStart.length() > 0) && (intset.IPEnd.length() >0 )) {
           Output=AddConfL("IP Interface "+intset.Description.replaceAll(" ","_")+" "+intset.IPAddress+" "+intset.IPSubnet+" "+
                           intset.IntName+" "+intset.IPStart+" "+intset.IPEnd+" "+intset.Ingress+" "+intset.Egress+" "+
                           intset.MAC+" "+intset.IPGateway);
@@ -4270,7 +4276,7 @@ public class NetworkWin extends Container {
           }
       
           if (intset.IntName.indexOf(":") < 0) {
-            if ((intset.IPStart.length() > 0) & (intset.IPEnd.length() >0 )) {
+            if ((intset.IPStart.length() > 0) && (intset.IPEnd.length() >0 )) {
               Output=AddConfL("IP Interface "+intset.Description.replaceAll(" ","_")+" "+intset.IPAddress+" "+intset.IPSubnet+" "+
                               intset.IntName+" "+intset.IPStart+" "+intset.IPEnd+" "+intset.Ingress+" "+intset.Egress+" "+intset.MAC+" "+intset.IPGateway);
             } else {
@@ -4278,7 +4284,7 @@ public class NetworkWin extends Container {
                               intset.Ingress+" "+intset.Egress+" "+intset.MAC+" "+intset.IPGateway);
             }
           } else {
-            if ((intset.IPStart.length() > 0) & (intset.IPEnd.length() >0 )) {
+            if ((intset.IPStart.length() > 0) && (intset.IPEnd.length() >0 )) {
               Alias=Alias+"IP Interface "+intset.Description.replaceAll(" ","_")+" "+intset.IPAddress+" "+intset.IPSubnet+" "+
                     intset.IntName+" "+intset.IPStart+" "+intset.IPEnd+" "+intset.Ingress+" "+intset.Egress+" "+intset.MAC+" "+intset.IPGateway+newline;
             } else {
@@ -4296,7 +4302,7 @@ public class NetworkWin extends Container {
         intdata=(DefaultMutableTreeNode)e.nextElement();
         wanset=(WanDef)intdata.getUserObject();
  
-        if ((wanset.IPStart.length() > 0) & (wanset.IPEnd.length() >0 )) {
+        if ((wanset.IPStart.length() > 0) && (wanset.IPEnd.length() >0 )) {
           Output=AddConfL("IP Route "+wanset.Description.replaceAll(" ","_")+" "+wanset.IPAddress+" "+wanset.IPSubnet+" "+wanset.LGateway+" "+
                           wanset.RGateway+" "+wanset.IPStart+" "+wanset.IPEnd);
         } else {
@@ -4316,9 +4322,7 @@ public class NetworkWin extends Container {
       for (Enumeration e = iwconfig.children() ; e.hasMoreElements() ;) {
         intdata=(DefaultMutableTreeNode)e.nextElement();
         iwconf=(WiFiConfig)intdata.getUserObject();
-        Output=AddConfL("IP WiFi "+iwconf.device+" "+iwconf.essid.replaceAll(" ","_")+" "+
-                        iwconf.name.replaceAll(" ","_")+" "+iwconf.key+" "+iwconf.apmac+" "+
-                        iwconf.channel+" "+iwconf.power+" "+iwconf.rate);
+        Output=AddConfL(iwconf.confout());
       }
 
 /*
@@ -4335,22 +4339,17 @@ public class NetworkWin extends Container {
         if (intset.Description.length() == 0) {
           intset.Description=intset.IntName;
         }
-        if ((intset.IPStart.length() > 0) & (intset.IPEnd.length() >0 )) {
+        if ((intset.IPStart.length() > 0) && (intset.IPEnd.length() >0 )) {
           Output=AddConfL("IP Interface "+intset.Description.replaceAll(" ","_")+" "+intset.IPAddress+" "+intset.IPSubnet+" "+
                           intset.IntName+" "+intset.IPStart+" "+intset.IPEnd);
         } else {
           Output=AddConfL("IP Interface "+intset.Description.replaceAll(" ","_")+" "+intset.IPAddress+" "+intset.IPSubnet+" "+intset.IntName);
         }
       }
-      WiFiConfig iwconf;
-      iwconf=(WiFiConfig)lwireless.getUserObject();
-      Output=AddConfL("IP WiFi lite "+iwconf.essid.replaceAll(" ","_")+" "+iwconf.key+" "+iwconf.channel);
     }
 
     if (systype.equals("full")) {
-      if (tcpconf.nexthop.length() > 0) {
-        Output=AddConfL("IP SysConf Nexthop "+tcpconf.nexthop);
-      }
+      Output=AddConfL("IP SysConf Nexthop "+tcpconf.nexthop);
 
       if (tcpconf.vpnrange.length() > 0) {
         Output=AddConfL("IP SysConf VPNNet "+tcpconf.vpnrange);
@@ -4743,8 +4742,8 @@ public class NetworkWin extends Container {
 
     iwconfig.removeAllChildren();
     treeModel.reload(iwconfig);
-    lwireless.removeAllChildren();
-    treeModel.reload(lwireless);
+//    lwireless.removeAllChildren();
+//    treeModel.reload(lwireless);
 
     wanNode.removeAllChildren();
     treeModel.reload(wanNode);
