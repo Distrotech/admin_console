@@ -801,9 +801,6 @@ public class NetworkSentryWindow extends Container implements ChangeListener {
                     network.tcpconf.ldapserver=tmp.substring(7,tmp.length());
                 } else if (tmp.startsWith("Login ")) {
                     network.tcpconf.ldaplogin=tmp.substring(6,tmp.length());
-                } else if (tmp.startsWith("Password ")) {
-                    network.tcpconf.ldappassword=tmp.substring(9,tmp.length());
-                    network.tcpconf.ldaporigpass=tmp.substring(9,tmp.length());
                 }
             } else if (tmp.startsWith("SysConf ")) {
                 tmp=tmp.substring(8,tmp.length());
@@ -1664,18 +1661,6 @@ public class NetworkSentryWindow extends Container implements ChangeListener {
                     System.out.println(tmp);
                     confString="";
                 }
-            } else if (tmp.startsWith("LDAP ")) {
-                tmp=tmp.substring(5,tmp.length());
-                if (tmp.startsWith("Login ")) {
-                    tmp=tmp.substring(6,tmp.length());
-                    emailwin.emailconf.LDAPUN=tmp;
-                } else if (tmp.startsWith("Password ")) {
-                    tmp=tmp.substring(9,tmp.length());
-                    emailwin.emailconf.LDAPPW=tmp;
-                } else {
-                    System.out.println(tmp);
-                    confString="";
-                }
             } else {
                 System.out.println(tmp);
                 confString="";
@@ -2211,7 +2196,7 @@ public class NetworkSentryWindow extends Container implements ChangeListener {
 }
 
 class EmailConf {
-    String Dmethod,SmartHost,MaxMsgSize,MX1,MX2,Redirect,Domain,DNS,MSChild,Ziplevel,Rescan,MaxScore,MinScore,LDAPUN,LDAPPW;
+    String Dmethod,SmartHost,MaxMsgSize,MX1,MX2,Redirect,Domain,DNS,MSChild,Ziplevel,Rescan,MaxScore,MinScore;
     boolean Orbs,Quarantine,AlertSender,IFrame,Object,HTML,Archive,Backup,MSBackup;
     Integer FMPer,FMSHour,FMEHour,FMDay;
     public EmailConf(){
@@ -2227,8 +2212,6 @@ class EmailConf {
         MaxMsgSize="10";
         MX1="";
         MX2="";
-        LDAPUN="";
-        LDAPPW="";
         Redirect="";
         Orbs=true;
         Quarantine=false;

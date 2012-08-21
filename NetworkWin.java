@@ -783,7 +783,6 @@ public class NetworkWin extends Container {
 //applenetphase;
     JTextField prwins,secwins,nexthop,lease,maxlease,ntpserver,pdns,sdns,ldaplogin,ldapserver,vpnrange,ovpnrange,l2tprange,external;
     JTextField ingress,egress,bridgeint;
-    JPasswordField pass1,pass2;
     public NetworkGlobal() {
       GridBagLayout gridbag = new GridBagLayout();
       GridBagConstraints layout = new GridBagConstraints();
@@ -844,12 +843,6 @@ public class NetworkWin extends Container {
 
       ldaplogin=new JTextField(tcpconf.ldaplogin,10);
       addLabel(new JLabel("LDAP Server Bind DN (Username)"),ldaplogin,gridbag,layout);
-
-      pass1=new JPasswordField(tcpconf.ldappassword,10);
-      addPwLabel(new JLabel("LDAP Password (Do Not Change Here!)"),pass1,gridbag,layout);
-
-      pass2=new JPasswordField(tcpconf.ldappassword,10);
-      addPwLabel(new JLabel("Confirm Password"),pass2,gridbag,layout);
 
       bridgeint=new JTextField(tcpconf.bridgeint,10);
       addLabel(new JLabel("Internal Bridge Interfaces"),bridgeint,gridbag,layout);
@@ -978,12 +971,6 @@ public class NetworkWin extends Container {
 
       tcpconf.ldapserver=ldapserver.getText();
       tcpconf.ldaplogin=ldaplogin.getText();
-      if (pass1.getText().equals(pass2.getText())) {
-        tcpconf.ldappassword=pass1.getText();
-      } else {
-        pass1.setText(tcpconf.ldappassword);
-        pass2.setText(tcpconf.ldappassword);
-      }
       tcpconf.bridgeint=bridgeint.getText();
 
       tcpconf.intint=(DefaultMutableTreeNode)lint.getSelectedItem();
@@ -1000,7 +987,7 @@ public class NetworkWin extends Container {
   }
 
   class getSerial extends Container implements ActionListener {
-    JTextField hname,dname,ldaplogin,ldappassword;
+    JTextField hname,dname,ldaplogin;
 
     public getSerial() {
       GridBagLayout gridbag = new GridBagLayout();
@@ -1029,9 +1016,6 @@ public class NetworkWin extends Container {
 
       ldaplogin=new JTextField(tcpconf.ldaplogin,10);
       addLabel(new JLabel("LDAP Server Bind DN (Username)"),ldaplogin,gridbag,layout);
-
-      ldappassword=new JTextField(tcpconf.ldappassword,10);
-      addLabel(new JLabel("LDAP Server Password"),ldappassword,gridbag,layout);
 
       layout.weighty=1;
       layout.gridwidth=GridBagConstraints.REMAINDER;
@@ -4474,14 +4458,6 @@ public class NetworkWin extends Container {
         Output=AddConfL("IP LDAP Login "+tcpconf.ldaplogin);
       }
 
-      if (tcpconf.ldappassword.length() > 0) {
-        Output=AddConfL("IP LDAP Password "+tcpconf.ldappassword);
-      }
-
-      if (tcpconf.ldaporigpass.length() > 0) {
-        Output=AddConfL("IP LDAP OPassword "+tcpconf.ldaporigpass);
-      }
-
       if (tcpconf.ingress.length() > 0) {
         Output=AddConfL("IP TC Ingress "+tcpconf.ingress);
       }
@@ -4529,10 +4505,6 @@ public class NetworkWin extends Container {
 
       if (tcpconf.ldaplogin.length() > 0) {
         Output=AddConfL("IP LDAP Login "+tcpconf.ldaplogin);
-      }
-
-      if (tcpconf.ldappassword.length() > 0) {
-        Output=AddConfL("IP LDAP Password "+tcpconf.ldappassword);
       }
 
       if (tcpconf.skey.length() > 0) {
@@ -4954,7 +4926,7 @@ public class NetworkWin extends Container {
 
 class TcpConf {
     String pdns,sdns,pwins,swins,nexthop,external,lease,maxlease,ntpserver,skey,dname,hname;
-    String ldapserver,ldaplogin,ldappassword,ldaporigpass,bridgeint,ingress,egress,vpnrange,ovpnrange,l2tprange;
+    String ldapserver,ldaplogin,bridgeint,ingress,egress,vpnrange,ovpnrange,l2tprange;
     DefaultMutableTreeNode intint,extint,vpnint;
     
     public TcpConf() {
@@ -4984,7 +4956,6 @@ class TcpConf {
 */
         ldapserver="127.0.0.1";
         ldaplogin="uid=admin,ou=users";
-        ldappassword="";
         bridgeint="";
         ingress="";
         egress="";

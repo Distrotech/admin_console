@@ -130,10 +130,9 @@ public class EmailWin extends Container {
   }
 
   class ConfigWin extends Container implements ActionListener{
-    JTextField msgsize,smarthost,mx1,mx2,mredir,mdomain,mdns,scanchild,zipscan,maxscore,minscore,ldaplogin;
+    JTextField msgsize,smarthost,mx1,mx2,mredir,mdomain,mdns,scanchild,zipscan,maxscore,minscore;
     JCheckBox useorbs,usequar,senderalert,allowiframe,allowobject,striphtml,arcmail,bupmail,msbupmail;
     JComboBox dtype,period,fromh,toh,days,scanperiod;
-    JPasswordField lpass1,lpass2;
     int psel,fhsel,tohsel;
 
     public ConfigWin() {
@@ -180,15 +179,6 @@ public class EmailWin extends Container {
 
         smarthost=new JTextField(emailconf.SmartHost,10);
         addLabel(new JLabel("SMTP Gateway"),smarthost,gridbag,layout);
-
-        ldaplogin=new JTextField(emailconf.LDAPUN,10);
-        addLabel(new JLabel("LDAP Username (Restricted To Email)"),ldaplogin,gridbag,layout);
-
-        lpass1=new JPasswordField(emailconf.LDAPPW,10);
-        addLabel(new JLabel("LDAP Password"),lpass1,gridbag,layout);
-
-        lpass2=new JPasswordField(emailconf.LDAPPW,10);
-        addLabel(new JLabel("Confirm Password"),lpass2,gridbag,layout);
 
         msgsize=new JTextField(emailconf.MaxMsgSize,10);
         addLabel(new JLabel("Max. Message Size (Mb)"),msgsize,gridbag,layout);
@@ -388,13 +378,6 @@ public class EmailWin extends Container {
         emailconf.Dmethod=dtype.getSelectedItem().toString();
         emailconf.SmartHost=smarthost.getText();
 
-        emailconf.LDAPUN=ldaplogin.getText();
-        if (lpass1.getText().equals(lpass2.getText())) {
-          emailconf.LDAPPW=lpass1.getText();
-        } else {
-          lpass1.setText(emailconf.LDAPPW);
-          lpass2.setText(emailconf.LDAPPW);
-        }
         emailconf.MaxMsgSize=msgsize.getText();
         emailconf.MSChild=scanchild.getText();
         emailconf.Ziplevel=zipscan.getText();
@@ -1182,14 +1165,6 @@ public class EmailWin extends Container {
         Output=AddConfL("Email MinScore "+emailconf.MinScore);
       } else {
         Output=AddConfL("Email MinScore 2");
-      }
-
-      if (emailconf.LDAPUN.length() > 0) {
-        Output=AddConfL("Email LDAP Login "+emailconf.LDAPUN);
-      }
-
-      if (emailconf.LDAPPW.length() > 0) {
-        Output=AddConfL("Email LDAP Password "+emailconf.LDAPPW);
       }
 
       Output=AddConfL("Email AntiSpam "+emailconf.Orbs);
