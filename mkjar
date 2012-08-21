@@ -25,7 +25,8 @@ if [ "$1" ];then
     keytool -import -alias netsentry -file sign.pem
   fi;
   jarsigner NetworkSentry.jar netsentry
-  cp NetworkSentry.jar /mnt/dev/var/spool/apache/htdocs/ns
+  scp NetworkSentry.jar root@[::1]:/var/spool/apache/htdocs/ns
+  scp NetworkSentry.jar root@[::1]:/mnt/dev/var/spool/apache/htdocs/ns
 fi;
 
 
