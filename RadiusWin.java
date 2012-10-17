@@ -170,8 +170,8 @@ public class RadiusWin extends Container {
     }
 
     public void actionPerformed(ActionEvent event) {
-      if ((secret1.getText().length() > 0) & (secret1.getText().equals(secret2.getText()))) { 
-        ssecret=secret1.getText();
+      if ((secret1.getPassword().length > 0) & (Arrays.equals(secret1.getPassword(),secret2.getPassword()))) { 
+        ssecret=secret1.getPassword().toString();
       } else {
         secret1.setText(ssecret);
         secret2.setText(ssecret);
@@ -283,9 +283,9 @@ public class RadiusWin extends Container {
     }
 
     public void actionPerformed(ActionEvent event) {
-      if ((host.getText().length() > 0) & (secret1.getText().length() > 0) &
-          (alias.getText().length() > 0) & (secret1.getText().equals(secret2.getText()))) {
-        DefaultMutableTreeNode childnode=addRadClient(host.getText(),secret1.getText(),alias.getText());
+      if ((host.getText().length() > 0) & (secret1.getPassword().length > 0) &
+          (alias.getText().length() > 0) & (Arrays.equals(secret1.getPassword(),secret2.getPassword()))) {
+        DefaultMutableTreeNode childnode=addRadClient(host.getText(),secret1.getPassword().toString(),alias.getText());
 
         userswindow.scrollPathToVisible(new TreePath(childnode.getPath()));
         sortpanel.listdata.addElement(childnode);
@@ -366,10 +366,10 @@ public class RadiusWin extends Container {
     }
 
     public void actionPerformed(ActionEvent event) {
-      if ((host.getText().length() > 0) & (secret1.getText().equals(secret2.getText())) &
-          (secret1.getText().length() > 0) & (alias.getText().length() > 0)) {
+      if ((host.getText().length() > 0) & (Arrays.equals(secret1.getPassword(),secret2.getPassword())) &
+          (secret1.getPassword().length > 0) & (alias.getText().length() > 0)) {
         raddata.Host=host.getText();
-        raddata.Secret=secret1.getText();
+        raddata.Secret=secret1.getPassword().toString();
         raddata.Alias=alias.getText();
 
         treeModel.reload(node);
@@ -505,9 +505,9 @@ public class RadiusWin extends Container {
 
     public void actionPerformed(ActionEvent event) {
       if ((realm.getText().length() > 0) & (auth.getText().length() > 0) & 
-          (acct.getText().length() > 0) & (secret1.getText().equals(secret2.getText()))) {
+          (acct.getText().length() > 0) & (Arrays.equals(secret1.getPassword(),secret2.getPassword()))) {
         if (! isEdit) {
-          DefaultMutableTreeNode childnode=addRadRealm(realm.getText(),secret1.getText(),auth.getText(),acct.getText(),
+          DefaultMutableTreeNode childnode=addRadRealm(realm.getText(),secret1.getPassword().toString(),auth.getText(),acct.getText(),
                                                        rrobin.isSelected(),strip.isSelected());
           sortpanel.listdata.addElement(childnode);
           realm.setText("");
@@ -522,7 +522,7 @@ public class RadiusWin extends Container {
           userswindow.scrollPathToVisible(new TreePath(childnode.getPath()));
         } else {
           EditRealm.Realm=realm.getText();
-          EditRealm.Secret=secret1.getText();
+          EditRealm.Secret=secret1.getPassword().toString();
           EditRealm.Auth=auth.getText();
           EditRealm.Acct=acct.getText();
  

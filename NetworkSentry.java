@@ -29,11 +29,12 @@ class NetworkSentry extends JFrame {
     NetworkSentry window;
     String systype;
     
+/*
     Properties prop = System.getProperties(); 
-    prop.put("http.proxyHost","10.10.255.1");
+    prop.put("http.proxyHost","127.0.0.1");
     prop.put("http.proxyPort","3128"); 
-    prop.put("https.proxyHost","10.10.255.1");
-    prop.put("https.proxyPort","3128"); 
+    prop.put("https.proxyHost","127.0.0.1");
+    prop.put("https.proxyPort","3128");*/
 
     if (args.length > 0) {
       window = new NetworkSentry(args[0]); 

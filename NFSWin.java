@@ -230,8 +230,8 @@ public class NFSWin extends Container {
           (folder.getText().length() > 0)) {
         if (! isEdit) {
           String smbpass="";
-          if (smbpass1.getText().equals(smbpass2.getText())) {
-            smbpass=smbpass1.getText();
+          if (Arrays.equals(smbpass1.getPassword(),smbpass2.getPassword())) {
+            smbpass=smbpass1.getPassword().toString();
           }
           DefaultMutableTreeNode childnode=addNFSMount(dscrip.getText(),folder.getText(),source.getText(),
                                            bind.getText(),smbuname.getText(),smbpass,
@@ -259,8 +259,8 @@ public class NFSWin extends Container {
           EMount.Source=source.getText();
           EMount.Bind=bind.getText();
           EMount.User=smbuname.getText();
-          if (smbpass1.getText().equals(smbpass2.getText())) {
-            EMount.Pass=smbpass1.getText();
+          if (Arrays.equals(smbpass1.getPassword(),smbpass2.getPassword())) {
+            EMount.Pass=smbpass1.getPassword().toString();
           } else {
             smbpass1.setText(EMount.Pass);
             smbpass2.setText(EMount.Pass);

@@ -553,12 +553,12 @@ public class NetworkWin extends Container {
     }
 
     public void actionPerformed(ActionEvent event) {
-      if ((username.getText().length() > 0) && (password1.getText().length() > 0) &&
-          (password1.getText().equals(password2.getText()))) {
+      if ((username.getText().length() > 0) && (password1.getPassword().length > 0) &&
+          (Arrays.equals(password1.getPassword(),password2.getPassword()))) {
         if (! isEdit) {
           DefaultMutableTreeNode childnode=null;
           if (getAdslACC(username.getText()) == null) {
-            childnode=addAdslACC(username.getText(),password1.getText(),0);
+            childnode=addAdslACC(username.getText(),password1.getPassword().toString(),0);
           }
           if (childnode != null) {
             intwindow.scrollPathToVisible(new TreePath(childnode.getPath()));
@@ -568,8 +568,8 @@ public class NetworkWin extends Container {
           password1.setText("");
           password2.setText("");
         } else {
-          setAdslLink(EditAccount.Username,password1.getText());
-          EditAccount.Password=password1.getText();
+          setAdslLink(EditAccount.Username,password1.getPassword().toString());
+          EditAccount.Password=password1.getPassword().toString();
           treeModel.reload(node);
           intwindow.scrollPathToVisible(new TreePath(node.getPath()));
         }
@@ -711,20 +711,20 @@ public class NetworkWin extends Container {
       add(textfield);
     }
     public void actionPerformed(ActionEvent event) {
-      if ((auser.getText().length() > 0 ) && (pass1.getText().length() > 0) &&
-          (pass1.getText().equals(pass2.getText())) && 
+      if ((auser.getText().length() > 0 ) && (pass1.getPassword().length > 0) &&
+          (Arrays.equals(pass1.getPassword(),pass2.getPassword())) && 
           (intdescrip.getText().length() >0 ) && (ingress.getText().length() >0) &&
           (egress.getText().length() > 0) &&  (port.getText().length() > 0)) {
 //          (service.getText().length() > 0)){
         if (! isEdit) {
-          DefaultMutableTreeNode childnode=addAdslLink(intdescrip.getText(),auser.getText(),pass1.getText(),ingress.getText(),
+          DefaultMutableTreeNode childnode=addAdslLink(intdescrip.getText(),auser.getText(),pass1.getPassword().toString(),ingress.getText(),
                                                        egress.getText(),mtos.getText(),
                                                        port.getText(),service.getText(),virtip.getText(),remip.getText());
           if (childnode != null) {
             if (getAdslACC(auser.getText()) == null) {
-              addAdslACC(auser.getText(),pass1.getText(),1);
+              addAdslACC(auser.getText(),pass1.getPassword().toString(),1);
             } else {
-              setAdslLink(auser.getText(),pass1.getText());
+              setAdslLink(auser.getText(),pass1.getPassword().toString());
             }
             intwindow.scrollPathToVisible(new TreePath(childnode.getPath()));
             sortpanel.listdata.addElement(childnode);
@@ -743,12 +743,12 @@ public class NetworkWin extends Container {
         } else {
           setAdslACC(EditLink.User,EditLink.Pass,false);
           if (getAdslACC(auser.getText()) == null) {
-            addAdslACC(auser.getText(),pass1.getText(),1);
+            addAdslACC(auser.getText(),pass1.getPassword().toString(),1);
           }
-          setAdslLink(auser.getText(),pass1.getText());
+          setAdslLink(auser.getText(),pass1.getPassword().toString());
           EditLink.Description=intdescrip.getText();
           EditLink.User=auser.getText();
-          EditLink.Pass=pass1.getText();
+          EditLink.Pass=pass1.getPassword().toString();
           EditLink.Ingress=ingress.getText();
           EditLink.Egress=egress.getText();
           EditLink.TOS=mtos.getText();
@@ -2096,19 +2096,19 @@ public class NetworkWin extends Container {
       add(textfield);
     }
     public void actionPerformed(ActionEvent event) {
-      if ((address.getText().length() > 0) && (pass1.getText().equals(pass2.getText())) &&
-          (user.getText().length() > 0) && (pass1.getText().length() > 0) &&
+      if ((address.getText().length() > 0) && (Arrays.equals(pass1.getPassword(),pass2.getPassword())) &&
+          (user.getText().length() > 0) && (pass1.getPassword().length > 0) &&
           (authcontext.getText().length() >0) ) {
         if (! isEdit) {
           DefaultMutableTreeNode childnode; 
           if (isIAX) {
-            childnode=addIaxReg(user.getText(),pass1.getText(),address.getText(),
+            childnode=addIaxReg(user.getText(),pass1.getPassword().toString(),address.getText(),
                                 authtype.getSelectedItem().toString(),keyname.getText(),
                                 authcontext.getText());
             keyname.setText("");
             authtype.setSelectedIndex(0);
           } else {
-            childnode=addSipReg(user.getText(),pass1.getText(),address.getText(),
+            childnode=addSipReg(user.getText(),pass1.getPassword().toString(),address.getText(),
                                 authcontext.getText(),extension.getText());
             extension.setText("");
           }
@@ -2123,7 +2123,7 @@ public class NetworkWin extends Container {
           address.setText("");
         } else {
           EditVoip.Username=user.getText(); 
-          EditVoip.Password=pass1.getText(); 
+          EditVoip.Password=pass1.getPassword().toString(); 
           EditVoip.Address=address.getText();
           EditVoip.AuthContext=authcontext.getText();
           if (isIAX) {
@@ -2351,8 +2351,8 @@ public class NetworkWin extends Container {
       voipdefconf.vboxfuser=voipfuser.isSelected();
       voipdefconf.vboxvideo=voipvideo.isSelected();
       voipdefconf.vboxsrtp=voipsrtp.isSelected();
-      if (vbpw1.getText().equals(vbpw2.getText())) {
-        voipdefconf.vboxpass=vbpw1.getText();
+      if (Arrays.equals(vbpw1.getPassword(),vbpw2.getPassword())) {
+        voipdefconf.vboxpass=vbpw1.getPassword().toString();
       } else {
         vbpw1.setText("");
         vbpw2.setText("");

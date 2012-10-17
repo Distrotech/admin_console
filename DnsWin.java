@@ -425,8 +425,8 @@ public class DnsWin extends Container {
           }
         }
       } else {
-        if (tsigkey1.getText().equals(tsigkey2.getText())) {
-          EditZone.Tsig=tsigkey1.getText();
+        if (Arrays.equals(tsigkey1.getPassword(),tsigkey2.getPassword())) {
+          EditZone.Tsig=tsigkey1.getPassword().toString();
         } else {
           tsigkey1.setText(EditZone.Tsig);
           tsigkey2.setText(EditZone.Tsig);
@@ -597,14 +597,14 @@ public class DnsWin extends Container {
       dnsconf.DynDNSIP=dyndnsserv.getText();
       dnsconf.DynDNSDomain=dyndnsdomain.getText();
       dnsconf.Search=searchdomain.getText();
-      if (dyndnssecret11.getText().equals(dyndnssecret12.getText())) {
-        dnsconf.DynDNSSecret=dyndnssecret11.getText();
+      if (Arrays.equals(dyndnssecret11.getPassword(),dyndnssecret12.getPassword())) {
+        dnsconf.DynDNSSecret=dyndnssecret11.getPassword().toString();
       } else {
         dyndnssecret11.setText(dnsconf.DynDNSSecret);
         dyndnssecret12.setText(dnsconf.DynDNSSecret);
       }
-      if (dyndnssecret21.getText().equals(dyndnssecret22.getText())) {
-        dnsconf.DynDNSSecret2=dyndnssecret21.getText();
+      if (Arrays.equals(dyndnssecret21.getPassword(),dyndnssecret22.getPassword())) {
+        dnsconf.DynDNSSecret2=dyndnssecret21.getPassword().toString();
       } else {
         dyndnssecret21.setText(dnsconf.DynDNSSecret2);
         dyndnssecret22.setText(dnsconf.DynDNSSecret2);
@@ -690,8 +690,8 @@ public class DnsWin extends Container {
     public void actionPerformed(ActionEvent event) {
       String zonekey;
       if (domain.getText().length() > 0) {
-        if ((tsigkey1.getText().length() > 0) & (tsigkey1.getText().equals(tsigkey2.getText()))){
-          zonekey=tsigkey1.getText();
+        if ((tsigkey1.getPassword().length > 0) & (Arrays.equals(tsigkey1.getPassword(),tsigkey2.getPassword()))){
+          zonekey=tsigkey1.getPassword().toString();
         } else {
           zonekey="";
         }

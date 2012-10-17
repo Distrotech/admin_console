@@ -242,8 +242,8 @@ public class SquidWin extends Container {
       squidconf.CacheSize=squidcs.getText();
       squidconf.Parent=squidparent.getText();
       squidconf.Login=squidlogin.getText();
-      if (squidpass1.getText().equals(squidpass2.getText())) {
-        squidconf.Pass=squidpass1.getText();
+      if (Arrays.equals(squidpass1.getPassword(),squidpass2.getPassword())) {
+        squidconf.Pass=squidpass1.getPassword().toString();
       } else {
         squidpass1.setText("");
         squidpass2.setText("");
@@ -886,9 +886,9 @@ public class SquidWin extends Container {
     public void actionPerformed(ActionEvent event) {
       String DaysSel="";
       if (event.getActionCommand() == "Add Time Period") {
-        if ((daylist.getSelectedValues().length > 0) & (times.getText().length() > 0) &
+        if ((daylist.getModel().getSize() > 0) & (times.getText().length() > 0) &
             (timee.getText().length() > 0)){
-          for(int rcnt=0;rcnt<daylist.getSelectedValues().length;rcnt++) {
+          for(int rcnt=0;rcnt<daylist.getModel().getSize();rcnt++) {
             if (daylist.getSelectedValues()[rcnt].toString() == "Monday") {
               DaysSel="mon ";
             } else if (daylist.getSelectedValues()[rcnt].toString() == "Tuesday") {
