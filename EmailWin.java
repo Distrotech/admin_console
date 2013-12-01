@@ -641,7 +641,7 @@ public class EmailWin extends Container {
         if (! isEdit) {
           DefaultMutableTreeNode childnode=new DefaultMutableTreeNode(new POP3Collect(server.getText(),
                                                                                       username.getText(),
-                                                                                      pass1.getPassword().toString(),
+                                                                                      new String(pass1.getPassword()),
                                                                                       envelope.getText(),
                                                                                       localinfo.getText(),
                                                                                       mdrop,
@@ -664,7 +664,7 @@ public class EmailWin extends Container {
           EditPOP3.Server=server.getText();
           EditPOP3.UserName=username.getText();
           if (Arrays.equals(pass1.getPassword(),pass2.getPassword())) {
-            EditPOP3.Password=pass1.getPassword().toString();
+            EditPOP3.Password=new String(pass1.getPassword());
           } else {
             pass1.setText(EditPOP3.Password);
             pass2.setText(EditPOP3.Password);

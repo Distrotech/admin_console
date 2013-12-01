@@ -243,7 +243,7 @@ public class SquidWin extends Container {
       squidconf.Parent=squidparent.getText();
       squidconf.Login=squidlogin.getText();
       if (Arrays.equals(squidpass1.getPassword(),squidpass2.getPassword())) {
-        squidconf.Pass=squidpass1.getPassword().toString();
+        squidconf.Pass=new String(squidpass1.getPassword());
       } else {
         squidpass1.setText("");
         squidpass2.setText("");
@@ -885,23 +885,25 @@ public class SquidWin extends Container {
 
     public void actionPerformed(ActionEvent event) {
       String DaysSel="";
+      Object[] Days;
       if (event.getActionCommand() == "Add Time Period") {
         if ((daylist.getModel().getSize() > 0) & (times.getText().length() > 0) &
             (timee.getText().length() > 0)){
-          for(int rcnt=0;rcnt<daylist.getModel().getSize();rcnt++) {
-            if (daylist.getSelectedValues()[rcnt].toString() == "Monday") {
+          Days = daylist.getSelectedValuesList().toArray();
+          for(int rcnt=0;rcnt<Days.length;rcnt++) {
+            if (Days[rcnt].toString() == "Monday") {
               DaysSel="mon ";
-            } else if (daylist.getSelectedValues()[rcnt].toString() == "Tuesday") {
+            } else if (Days[rcnt].toString() == "Tuesday") {
               DaysSel=DaysSel+"tue ";
-            } else if (daylist.getSelectedValues()[rcnt].toString() == "Wednesday") {
+            } else if (Days[rcnt].toString() == "Wednesday") {
               DaysSel=DaysSel+"wed ";
-            } else if (daylist.getSelectedValues()[rcnt].toString() == "Thursday") {
+            } else if (Days[rcnt].toString() == "Thursday") {
               DaysSel=DaysSel+"thu ";
-            } else if (daylist.getSelectedValues()[rcnt].toString() == "Friday") {
+            } else if (Days[rcnt].toString() == "Friday") {
               DaysSel=DaysSel+"fri ";
-            } else if (daylist.getSelectedValues()[rcnt].toString() == "Saturday") {
+            } else if (Days[rcnt].toString() == "Saturday") {
               DaysSel=DaysSel+"sat ";
-            } else if (daylist.getSelectedValues()[rcnt].toString() == "Sunday") {
+            } else if (Days[rcnt].toString() == "Sunday") {
               DaysSel=DaysSel+"sun ";
             }
           }

@@ -426,7 +426,7 @@ public class DnsWin extends Container {
         }
       } else {
         if (Arrays.equals(tsigkey1.getPassword(),tsigkey2.getPassword())) {
-          EditZone.Tsig=tsigkey1.getPassword().toString();
+          EditZone.Tsig=new String(tsigkey1.getPassword());
         } else {
           tsigkey1.setText(EditZone.Tsig);
           tsigkey2.setText(EditZone.Tsig);
@@ -598,13 +598,13 @@ public class DnsWin extends Container {
       dnsconf.DynDNSDomain=dyndnsdomain.getText();
       dnsconf.Search=searchdomain.getText();
       if (Arrays.equals(dyndnssecret11.getPassword(),dyndnssecret12.getPassword())) {
-        dnsconf.DynDNSSecret=dyndnssecret11.getPassword().toString();
+        dnsconf.DynDNSSecret=new String(dyndnssecret11.getPassword());
       } else {
         dyndnssecret11.setText(dnsconf.DynDNSSecret);
         dyndnssecret12.setText(dnsconf.DynDNSSecret);
       }
       if (Arrays.equals(dyndnssecret21.getPassword(),dyndnssecret22.getPassword())) {
-        dnsconf.DynDNSSecret2=dyndnssecret21.getPassword().toString();
+        dnsconf.DynDNSSecret2=new String(dyndnssecret21.getPassword());
       } else {
         dyndnssecret21.setText(dnsconf.DynDNSSecret2);
         dyndnssecret22.setText(dnsconf.DynDNSSecret2);
@@ -691,7 +691,7 @@ public class DnsWin extends Container {
       String zonekey;
       if (domain.getText().length() > 0) {
         if ((tsigkey1.getPassword().length > 0) & (Arrays.equals(tsigkey1.getPassword(),tsigkey2.getPassword()))){
-          zonekey=tsigkey1.getPassword().toString();
+          zonekey=new String(tsigkey1.getPassword());
         } else {
           zonekey="";
         }

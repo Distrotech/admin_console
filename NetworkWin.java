@@ -558,7 +558,7 @@ public class NetworkWin extends Container {
         if (! isEdit) {
           DefaultMutableTreeNode childnode=null;
           if (getAdslACC(username.getText()) == null) {
-            childnode=addAdslACC(username.getText(),password1.getPassword().toString(),0);
+            childnode=addAdslACC(username.getText(),new String(password1.getPassword()),0);
           }
           if (childnode != null) {
             intwindow.scrollPathToVisible(new TreePath(childnode.getPath()));
@@ -568,8 +568,8 @@ public class NetworkWin extends Container {
           password1.setText("");
           password2.setText("");
         } else {
-          setAdslLink(EditAccount.Username,password1.getPassword().toString());
-          EditAccount.Password=password1.getPassword().toString();
+          setAdslLink(EditAccount.Username,new String(password1.getPassword()));
+          EditAccount.Password=new String(password1.getPassword());
           treeModel.reload(node);
           intwindow.scrollPathToVisible(new TreePath(node.getPath()));
         }
@@ -717,14 +717,14 @@ public class NetworkWin extends Container {
           (egress.getText().length() > 0) &&  (port.getText().length() > 0)) {
 //          (service.getText().length() > 0)){
         if (! isEdit) {
-          DefaultMutableTreeNode childnode=addAdslLink(intdescrip.getText(),auser.getText(),pass1.getPassword().toString(),ingress.getText(),
+          DefaultMutableTreeNode childnode=addAdslLink(intdescrip.getText(),auser.getText(),new String(pass1.getPassword()),ingress.getText(),
                                                        egress.getText(),mtos.getText(),
                                                        port.getText(),service.getText(),virtip.getText(),remip.getText());
           if (childnode != null) {
             if (getAdslACC(auser.getText()) == null) {
-              addAdslACC(auser.getText(),pass1.getPassword().toString(),1);
+              addAdslACC(auser.getText(),new String(pass1.getPassword()),1);
             } else {
-              setAdslLink(auser.getText(),pass1.getPassword().toString());
+              setAdslLink(auser.getText(),new String(pass1.getPassword()));
             }
             intwindow.scrollPathToVisible(new TreePath(childnode.getPath()));
             sortpanel.listdata.addElement(childnode);
@@ -743,12 +743,12 @@ public class NetworkWin extends Container {
         } else {
           setAdslACC(EditLink.User,EditLink.Pass,false);
           if (getAdslACC(auser.getText()) == null) {
-            addAdslACC(auser.getText(),pass1.getPassword().toString(),1);
+            addAdslACC(auser.getText(),new String(pass1.getPassword()),1);
           }
-          setAdslLink(auser.getText(),pass1.getPassword().toString());
+          setAdslLink(auser.getText(),new String(pass1.getPassword()));
           EditLink.Description=intdescrip.getText();
           EditLink.User=auser.getText();
-          EditLink.Pass=pass1.getPassword().toString();
+          EditLink.Pass=new String(pass1.getPassword());
           EditLink.Ingress=ingress.getText();
           EditLink.Egress=egress.getText();
           EditLink.TOS=mtos.getText();
@@ -2102,13 +2102,13 @@ public class NetworkWin extends Container {
         if (! isEdit) {
           DefaultMutableTreeNode childnode; 
           if (isIAX) {
-            childnode=addIaxReg(user.getText(),pass1.getPassword().toString(),address.getText(),
+            childnode=addIaxReg(user.getText(),new String(pass1.getPassword()),address.getText(),
                                 authtype.getSelectedItem().toString(),keyname.getText(),
                                 authcontext.getText());
             keyname.setText("");
             authtype.setSelectedIndex(0);
           } else {
-            childnode=addSipReg(user.getText(),pass1.getPassword().toString(),address.getText(),
+            childnode=addSipReg(user.getText(),new String(pass1.getPassword()),address.getText(),
                                 authcontext.getText(),extension.getText());
             extension.setText("");
           }
@@ -2123,7 +2123,7 @@ public class NetworkWin extends Container {
           address.setText("");
         } else {
           EditVoip.Username=user.getText(); 
-          EditVoip.Password=pass1.getPassword().toString(); 
+          EditVoip.Password=new String(pass1.getPassword()); 
           EditVoip.Address=address.getText();
           EditVoip.AuthContext=authcontext.getText();
           if (isIAX) {
@@ -2352,7 +2352,7 @@ public class NetworkWin extends Container {
       voipdefconf.vboxvideo=voipvideo.isSelected();
       voipdefconf.vboxsrtp=voipsrtp.isSelected();
       if (Arrays.equals(vbpw1.getPassword(),vbpw2.getPassword())) {
-        voipdefconf.vboxpass=vbpw1.getPassword().toString();
+        voipdefconf.vboxpass=new String(vbpw1.getPassword());
       } else {
         vbpw1.setText("");
         vbpw2.setText("");
